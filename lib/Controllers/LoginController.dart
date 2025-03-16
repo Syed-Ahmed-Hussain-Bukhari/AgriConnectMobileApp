@@ -9,7 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController {
-  final String loginApiUrl = 'http://152.67.10.128:5280/api/auth/login';
+   final String loginApiUrl = 'http://152.67.10.128:5280/api/auth/login';
+  // final String loginApiUrl = 'http://localhost:5280/api/auth/login';
+
   final String getDataApiUrl =
       'http://152.67.10.128:5280/api/auth/Get-Data-Token';
   final String tokenKey = 'auth_token';
