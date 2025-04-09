@@ -26,4 +26,3 @@ class _OnboardScreen3State extends State<OnboardScreen3> {
     );
   }
 }
-
