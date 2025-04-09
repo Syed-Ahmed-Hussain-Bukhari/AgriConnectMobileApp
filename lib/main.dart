@@ -88,6 +88,7 @@
 import 'package:agriconnect/Views/Authentication/Login.dart';
 import 'package:agriconnect/Views/Authentication/signUp.dart';
 import 'package:agriconnect/Views/Buyer/mainBuyer.dart';
+import 'package:agriconnect/Views/Farmer/mainFarmer.dart';
 import 'package:agriconnect/Views/StartScreen/OnboardScreen1.dart';
 import 'package:agriconnect/Views/StartScreen/SplashScree.dart';
 import 'package:flutter/material.dart';
@@ -104,6 +105,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
+      // home: FarmerMain(),
+      // home: BuyerMain(),
       home: SplashScreen(),
       // home: signUpScreen(),
       // home: BuyerMain(),

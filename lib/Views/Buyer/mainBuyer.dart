@@ -1,3 +1,5 @@
+import 'package:agriconnect/Components/customButton.dart';
+import 'package:agriconnect/Components/customSize.dart';
 import 'package:agriconnect/Controllers/LoginController.dart';
 import 'package:agriconnect/Controllers/buyerController.dart';
 import 'package:agriconnect/Models/CropModel.dart';
@@ -6,7 +8,9 @@ import 'package:agriconnect/Views/Buyer/confirmedOrder.dart';
 import 'package:agriconnect/Views/Common/profile_screen.dart';
 import 'package:agriconnect/Views/Order/detailed.dart';
 import 'package:agriconnect/Views/Order/shoppingCard.dart';
+import 'package:agriconnect/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -86,23 +90,69 @@ class _BuyerMainState extends State<BuyerMain> {
   Widget _buildHomeScreen() {
     return Column(
       children: [
+          SizedBox(height: 8),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
+          //     Expanded(
+          //       child: TextField(
+          //           cursorColor:  MyColors.primaryColor,
+                  
+          //         decoration: InputDecoration(
+          //            hintText: "Category",
+       
+          // filled: true,
+          // fillColor: Colors.white, // Background color
+          // border: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(12), // Rounded borders
+          //   borderSide: BorderSide(color: MyColors.primaryColor, width: 2),
+          // ),
+          // enabledBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(12),
+          //   borderSide: BorderSide(color: MyColors.grey, width: 1.5),
+          // ),
+          // focusedBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(12),
+          //   borderSide: BorderSide(color: MyColors.primaryColor, width: 2),
+          // ),
+          // contentPadding:
+          //     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          
+          //          ),
+          //         onChanged: (value) {
+          //           categoryFilter = value;
+          //           _filterCrops();
+          //         },
+          //       ),
+          //     ),
+          //     SizedBox(width: 8),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(labelText: 'Category'),
-                  onChanged: (value) {
-                    categoryFilter = value;
-                    _filterCrops();
-                  },
-                ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(labelText: 'Name'),
+                    cursorColor:  MyColors.primaryColor,
+                  
+                  decoration: InputDecoration(
+                       hintText: "Search in here by Name",
+       
+          filled: true,
+          fillColor: Colors.white, // Background color
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12), // Rounded borders
+            borderSide: BorderSide(color: MyColors.primaryColor, width: 2),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: MyColors.grey, width: 1.5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: MyColors.primaryColor, width: 2),
+          ),
+          suffixIcon: Icon(Icons.search,color:MyColors.grey),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          
+                    ),
                   onChanged: (value) {
                     nameFilter = value;
                     _filterCrops();
@@ -155,14 +205,37 @@ class _BuyerMainState extends State<BuyerMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buyer Main Page'),
+
+        title:   Container(
+          margin: EdgeInsets.only(top: 4),
+          child: Text(
+                      "Abhi Buy Kare  Sasta and taza fasal", 
+                     maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Gilroy',
+                        fontSize: 24,
+                        height:  1,
+                        // fontWeight: FontWeight.bold,
+                        color: MyColors.primaryColor,
+                        // color: MyColors.secondaryColor,
+                      ),
+                    ),
+
+                    
+        ),
+        
+        // Text('Buyer Main Page'),
         actions: [
           if (imageUrl != null)
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(imageUrl!),
-                radius: 20,
+              child: Container(
+                      margin: EdgeInsets.only(top: 4),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(imageUrl!),
+                  radius: 30,
+                ),
               ),
             ),
         ],
@@ -171,39 +244,93 @@ class _BuyerMainState extends State<BuyerMain> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
+                 decoration: BoxDecoration(
+            color:MyColors.primaryColor ,
+            ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage:
                     imageUrl != null ? NetworkImage(imageUrl!) : null,
                 child: imageUrl == null ? const Icon(Icons.person) : null,
               ),
-              accountName: Text('${username}'),
-              accountEmail: Text('${userId}'),
+
+               accountName: Text(
+                      username ?? 'N/A',
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.backgroundScaffoldColor
+                      ),
+                    ),
+              
+             accountEmail:Text(
+                      "${username}.@gmailcom" ?? "N/A",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.backgroundScaffoldColor
+                      ),
+                    ),
+              // accountName: 
+              // Text('${username}'),
+              // accountEmail: Text('${userId}'),
             ),
             ListTile(
               leading: const Icon(Icons.home),
-              title: const Text('Home'),
+              title:  Text(
+                      "Home",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.black
+                      ),
+                    ),
+              
+              // title: const Text('Home'),
               onTap: () => _onItemTapped(0),
             ),
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Profile'),
+               title:  Text(
+                      "Profile",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.black
+                      ),
+                    ),
               onTap: () => _onItemTapped(1),
             ),
             ListTile(
               leading: const Icon(Icons.shopping_cart),
-              title: const Text('Cart'),
+               title:  Text(
+                      "Cart",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.black
+                      ),
+                    ),
+             
               onTap: () => _onItemTapped(2),
             ),
+            // ListTile(
+            //   leading: const Icon(Icons.logout),
+            //   title: const Text('Logout'),
+            //   onTap: () {
+            //     LoginController().logout(context);
+            //   },
+            // ),
             ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
-              onTap: () {
-                LoginController().logout(context);
-              },
-            ),
-            ListTile(
+                 title:  Text(
+                      "Ordered",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.black
+                      ),
+                    ),
               leading: const Icon(Icons.shopping_cart_rounded),
-              title: const Text('Ordered'),
+          
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -214,7 +341,15 @@ class _BuyerMainState extends State<BuyerMain> {
             ),
             ListTile(
               leading: const Icon(Icons.money),
-              title: const Text('Transection'),
+             
+                title:  Text(
+                      "Transaction",
+                      style: GoogleFonts.inter(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: MyColors.black
+                      ),
+                    ),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -223,6 +358,27 @@ class _BuyerMainState extends State<BuyerMain> {
                 );
               },
             ),
+
+             Row(
+               children: [
+                 Container(
+                             margin: EdgeInsets.only(left: 8,top: 24),
+                             child:    CustomButton(
+                              radius: CustomSize().customWidth(context) / 10,
+                              height: CustomSize().customHeight(context) / 15,
+                              width: CustomSize().customWidth(context)/2 ,
+                              title: "Logout",
+                              
+                              loading: false,
+                              color: MyColors.primaryColor,
+                              onTap: () {
+                                 LoginController().logout(context);
+                             
+                              },
+                            ),
+                 ),
+               ],
+             )
           ],
         ),
       ),
@@ -235,6 +391,22 @@ class _BuyerMainState extends State<BuyerMain> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+            unselectedLabelStyle: GoogleFonts.inter(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: MyColors.black,
+        ),
+
+         selectedLabelStyle: GoogleFonts.inter(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: MyColors.primaryColor,
+        ),
+
+                    
+        backgroundColor: Colors.white,
+        selectedItemColor: MyColors.primaryColor,
+        unselectedItemColor: MyColors.black,
         currentIndex: _selectedIndex,
         onTap: (index) {
           if (index == 2) {
@@ -286,7 +458,8 @@ class CropCard extends StatelessWidget {
       },
       child: Card(
         elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -302,17 +475,35 @@ class CropCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                crop.name,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+              child: 
+                 Text(
+                      crop.name,
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: MyColors.black
+                      ),
+                    ),
+              // Text(
+              //   crop.name,
+              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              // ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Price: ${crop.price} per kg',
-                style: TextStyle(fontSize: 14, color: Colors.green),
-              ),
+              child:
+              Text(
+                      'Price: ${crop.price} per kg',
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: MyColors.primaryColor
+                      ),
+                    ),
+              //  Text(
+              //   'Price: ${crop.price} per kg',
+              //   style: TextStyle(fontSize: 14, color: Colors.green),
+              // ),
             ),
             SizedBox(height: 8),
           ],
