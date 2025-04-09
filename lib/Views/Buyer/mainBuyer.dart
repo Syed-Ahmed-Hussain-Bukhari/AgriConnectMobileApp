@@ -2,7 +2,8 @@ import 'package:agriconnect/Controllers/LoginController.dart';
 import 'package:agriconnect/Controllers/buyerController.dart';
 import 'package:agriconnect/Models/CropModel.dart';
 import 'package:agriconnect/Views/Buyer/BuyerTransection.dart';
-import 'package:agriconnect/Views/Buyer/confirmedOrder.dart';
+import 'package:agriconnect/Views/Buyer/complete_order.dart';
+import 'package:agriconnect/Views/Buyer/history_order.dart';
 import 'package:agriconnect/Views/Common/profile_screen.dart';
 import 'package:agriconnect/Views/Order/detailed.dart';
 import 'package:agriconnect/Views/Order/shoppingCard.dart';
@@ -220,6 +221,17 @@ class _BuyerMainState extends State<BuyerMain> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => TransactionScreen(userId: userId!)),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.money),
+              title: const Text('History Order'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HistoryOrder()),
                 );
               },
             ),

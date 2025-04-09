@@ -1,8 +1,10 @@
-// buyer_main.dart
 import 'package:agriconnect/Controllers/FarmerController.dart';
 import 'package:agriconnect/Controllers/LoginController.dart';
 import 'package:agriconnect/Views/Common/profile_screen.dart';
 import 'package:agriconnect/Views/Farmer/AddCrop.dart';
+import 'package:agriconnect/Views/Farmer/Complete_order.dart';
+import 'package:agriconnect/Views/Farmer/cropslist.dart';
+import 'package:agriconnect/Views/Farmer/histoty_order.dart';
 import 'package:flutter/material.dart';
 
 class FarmerMain extends StatefulWidget {
@@ -18,8 +20,14 @@ class _FarmerMainState extends State<FarmerMain> {
   String? imageUrl;
   String? username;
   String? userId;
-  String? roleName;
-  String? roleId;
+
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    CropListScreen(),
+    AddCrop(),
+    FarmerOrdersScreen(),
+  ];
 
   @override
   void initState() {
@@ -33,8 +41,12 @@ class _FarmerMainState extends State<FarmerMain> {
       imageUrl = userData['imageUrl'];
       username = userData['username'];
       userId = userData['userId'];
-      roleName = userData['roleName'];
-      roleId = userData['roleId'];
+    });
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
@@ -42,7 +54,7 @@ class _FarmerMainState extends State<FarmerMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buyer Main Page'),
+        title: const Text('Farmer Dashboard'),
         actions: [
           if (imageUrl != null)
             Padding(
@@ -69,26 +81,25 @@ class _FarmerMainState extends State<FarmerMain> {
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Home'),
-              onTap: () {},
+              onTap: () {
+                setState(() => _selectedIndex = 0);
+                Navigator.pop(context); // Close the drawer
+              },
             ),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Profile'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
+                setState(() => _selectedIndex = 1);
+                Navigator.pop(context);
               },
             ),
             ListTile(
               leading: const Icon(Icons.shopping_cart),
               title: const Text('Add Crop'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddCrop()),
-                );
+                setState(() => _selectedIndex = 2);
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -102,6 +113,17 @@ class _FarmerMainState extends State<FarmerMain> {
               onTap: () {},
             ),
             ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('History Order'),
+              onTap: () {
+                                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FarmerHistotyOrder()),
+                );
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: () {
@@ -111,20 +133,24 @@ class _FarmerMainState extends State<FarmerMain> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                'Welcome, $username!',
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add Crop',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Order',
+          ),
+        ],
       ),
     );
   }
