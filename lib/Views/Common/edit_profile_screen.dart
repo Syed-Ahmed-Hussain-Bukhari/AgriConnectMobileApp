@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:agriconnect/Components/customButton.dart';
 import 'package:agriconnect/Components/customSize.dart';
+import 'package:agriconnect/Components/inputField.dart';
 import 'package:agriconnect/Views/Buyer/mainBuyer.dart';
-import 'package:agriconnect/Views/Common/edit_profile_screen.dart';
+import 'package:agriconnect/Views/Common/profile_screen.dart';
 import 'package:agriconnect/Views/Farmer/mainFarmer.dart';
 import 'package:agriconnect/Views/Trainer/mainTrainer.dart';
 import 'package:agriconnect/Views/Transporter/mainTransporter.dart';
@@ -13,12 +14,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 
-class ProfileScreen extends StatefulWidget {
+class EditProfileScreen extends StatefulWidget {
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<Map<String, dynamic>> fetchUserData() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('auth_token') ?? '';
@@ -67,6 +68,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Navigator.pop(context); // Go back to the previous screen
     }
   }
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+    final TextEditingController locationController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +124,8 @@ Stack(
             left: 16,
             child: GestureDetector(
               onTap: (){
-                 
+                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));
+   
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -133,7 +140,7 @@ Stack(
             child: Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Text(
-                'Profile',
+                'Edit Profile',
                 style: GoogleFonts.inter(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
@@ -179,17 +186,7 @@ Stack(
           shape: BoxShape.circle,
           border: Border.all(color: Colors.white, width: 2),
         ),
-        child: GestureDetector(
-          onTap: (){
-             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>EditProfileScreen()));
-   
-          },
-          child: Icon(
-            Icons.edit,
-            size: 18,
-            color: Colors.white,
-          ),
-        ),
+        child:Image.asset("assets/gallery.png",width: 24,height:24,)
       ),
     ),
   ],
@@ -231,147 +228,67 @@ Stack(
                       // color: MyColors.secondaryColor,
                     ),
                   ),
-                   Text(
-                      email,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: MyColors.profileColor
-                      ),
-                    ),
-                     Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.phone, color: MyColors.profileColor),
-                       Text(
-                      phoneNumber,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: MyColors.profileColor
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Icon(Icons.location_on, color: MyColors.profileColor),
-                     Text(
-                      address,
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: MyColors.profileColor
-                      ),
-                    ),
-                    ],
-                  ),
-                  // Text(
-                  //   roleName,
-                  //   style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
-                  // ),
-                  //  Text(
-                  //     roleName,
-                  //     style: GoogleFonts.inter(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.bold,
-                  //       color: MyColors.profileColor
-                  //     ),
-                  //   ),
-               
+                   SizedBox(height: 30,),
+           
+            Padding(
+              padding: const EdgeInsets.only(left: 8,right: 8),
+              child: MyTextField(
+                emailController,
+                hintText: "Enter your email",
+                prefixIcon: Icons.email,
+                keyboardType: TextInputType.emailAddress
+              ),
+            ),
+             SizedBox(height: 30,),
+            Padding(
+              padding: const EdgeInsets.only(left: 10,right: 10),
+            
+              child: MyTextField(
+                passwordController,
+                hintText: "Enter your password",
+                prefixIcon: Icons.phone,
+                isPassword: true, // Hide password
+              ),
+            ),
+             SizedBox(height: 30,),
+            Padding(
+              padding: const EdgeInsets.only(left: 8,right: 8),
+              child: MyTextField(
+                phoneController,
+                hintText: "Enter your phone",
+                prefixIcon: Icons.email,
+                keyboardType: TextInputType.phone
+              ),
+            ),
+             SizedBox(height: 30,),
+             Padding(
+              padding: const EdgeInsets.only(left: 8,right: 8),
+              child: MyTextField(
+                locationController,
+                hintText: "Enter your location",
+                prefixIcon: Icons.location_on_outlined,
+                keyboardType: TextInputType.emailAddress
+              ),
+            ),
+             SizedBox(height: 30,),
+      
+           Container(
+            margin: EdgeInsets.only(left: 15,right: 15),
+            child:    CustomButton(
+                          radius: CustomSize().customWidth(context) / 10,
+                          height: CustomSize().customHeight(context) / 15,
+                          width: CustomSize().customWidth(context) /2,
+                          title: "Update",
+                          
+                          loading: false,
+                          color: MyColors.primaryColor,
+                          onTap: () {
+                        
+                          },
+                        ),
+           ),
+                        SizedBox(height: 30,),
                  
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      // Chip(
-                      //   label: Text(
-                      //     isActive ? "Active" : "Deactivated",
-                      //     style: const TextStyle(color: Colors.white),
-                      //   ),
-                      //   backgroundColor: isActive ? Colors.green : Colors.red,
-                      // ),
-                     Expanded(child: 
-                       Container(
-                          margin: EdgeInsets.only(left: 15),
-               
-                         child: CustomButton(
-                            radius: CustomSize().customWidth(context) / 10,
-                            height: CustomSize().customHeight(context) / 15,
-                            width: CustomSize().customWidth(context) ,
-                            title: isActive ? "Active" : "Deactivated",
-                            
-                            loading: false,
-                            color: isActive ? MyColors.primaryColor : Colors.red,
-                            onTap: () {
-                            
-                            },
-                          ),
-                       ),),
-                  Expanded(child: 
-                       Container(
-                          margin: EdgeInsets.only(left: 15,right: 15),
-               
-                         child: CustomButton(
-                            radius: CustomSize().customWidth(context) / 10,
-                            height: CustomSize().customHeight(context) / 15,
-                            width: CustomSize().customWidth(context) ,
-                            title: roleName,
-                            
-                            loading: false,
-                            color: MyColors.primaryColor,
-                            onTap: () {
-                            
-                            },
-                          ),
-                       ),)
-                    ],
-                  ),
-                  //  Container(
-                  //     margin: EdgeInsets.only(top: 12,left: 15,right: 15),
-                                  
-                  //    child: CustomButton(
-                  //       radius: CustomSize().customWidth(context) / 10,
-                  //       height: CustomSize().customHeight(context) / 15,
-                  //       width: CustomSize().customWidth(context)/2 ,
-                  //       title: "Edit Profile",
-                        
-                  //       loading: false,
-                  //       color: MyColors.profileColor,
-                  //       onTap: () {
-                        
-                  //       },
-                  //     ),
-                  //  ),
-                  const SizedBox(height: 20),
-                  // Card(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(15),
-                  //   ),
-                  //   elevation: 3,
-                  //   child: ListTile(
-                  //     leading: const Icon(Icons.email, color: Colors.blue),
-                  //     title: Text(email),
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 10),
-                  // Card(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(15),
-                  //   ),
-                  //   elevation: 3,
-                  //   child: ListTile(
-                  //     leading: const Icon(Icons.phone, color: Colors.green),
-                  //     title: Text(phoneNumber),
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 10),
-                  // Card(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(15),
-                  //   ),
-                  //   elevation: 3,
-                  //   child: ListTile(
-                  //     leading: const Icon(Icons.location_on, color: Colors.red),
-                  //     title: Text(address),
-                  //   ),
-                  // ),
                 ],
               ),
             );

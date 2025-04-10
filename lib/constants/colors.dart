@@ -10,4 +10,6 @@ class MyColors {
   static const Color green = Colors.green;
   static const Color red = Colors.red;
   static const Color black = Colors.black;
+  static const Color profileColor = Color(0xff3D405B);
+
 }
