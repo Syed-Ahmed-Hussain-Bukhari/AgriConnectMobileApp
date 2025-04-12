@@ -85,6 +85,7 @@
 //   }
 // }
 
+import 'package:agriconnect/Views/Buyer/mainBuyer.dart';
 import 'package:agriconnect/Views/StartScreen/SplashScree.dart';
 import 'package:flutter/material.dart';
 
@@ -100,7 +101,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      // home: SplashScreen(),
+      home: BuyerMain(),
       debugShowCheckedModeBanner: false,
     );
   }

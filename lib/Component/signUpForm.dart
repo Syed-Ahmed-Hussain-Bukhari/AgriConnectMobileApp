@@ -96,6 +96,8 @@
 import 'package:agriconnect/Component/customButton.dart';
 import 'package:agriconnect/Component/customSize.dart';
 import 'package:agriconnect/Component/inputField.dart';
+import 'package:agriconnect/Views/Authentication/Login.dart';
+import 'package:agriconnect/Views/Authentication/signUp.dart';
 import 'package:agriconnect/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
